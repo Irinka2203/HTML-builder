@@ -1,15 +1,15 @@
 const fs = require('fs');
-const path =require('path')
+const path = require('path');
 
-const { stdout, stdin, exit } = process;
+const { stdout, stdin, exit} = process;
 stdout.write('Введите текст\n');
 stdin.on('data', data => {
-  const string = data.toString().trim();
-  if (string === "exit"){
+  const string = data;
+  if (string.toString().trim() === "exit"){
     console.log('Bye!');
-    process.exit();
+    exit();
   }
-  if (string !== "exit") {
+  if (string.toString().trim() !== "exit") {
     fs.appendFile(
       path.join(__dirname, 'test.txt'),
       string,
@@ -17,15 +17,20 @@ stdin.on('data', data => {
         if (err) throw err;
       }
     );
+    
   }
-  
 });
+  
 
 process.on('SIGINT', () => {
   console.log('Bye!');
-  process.exit(0);
-  
+  exit();
 })
+
+
+   
+ 
+ 
 
 
 
